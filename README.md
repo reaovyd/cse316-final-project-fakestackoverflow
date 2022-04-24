@@ -3,6 +3,7 @@ Read the Project Specfications [here](https://docs.google.com/document/d/1zZjNk9
 Add design docs in *images/*
 
 ## Instructions to setup and run project
+Please view the **README.md** of the respective folders for **client/** and **server/**
 
 ## Design Patterns
 
