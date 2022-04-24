@@ -7,3 +7,7 @@ Add design docs in *images/*
 ## Design Patterns
 
 ## Miscellaneous
+
+Credits
+-
+Thanks to [visual-paradigm](https://online.visual-paradigm.com) for a great way to design UML diagrams.
