@@ -14,6 +14,10 @@ const qCommentSchema = new mongoose.Schema({
     question: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "question"
+    },
+    date: {
+        type: Date,
+        default: () => new Date()
     }
 })
 

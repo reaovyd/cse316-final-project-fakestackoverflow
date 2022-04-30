@@ -45,7 +45,7 @@ const questionSchema = new mongoose.Schema({
     views: {
         type: Number,
         default: 0
-    }
+    },
 })
 
 questionSchema.set("toJSON", {
@@ -53,5 +53,6 @@ questionSchema.set("toJSON", {
         delete obj.__v
     }
 })
+
 
 module.exports = mongoose.model("question", questionSchema)

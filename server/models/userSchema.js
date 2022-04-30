@@ -38,7 +38,7 @@ const userSchema = new mongoose.Schema({
     aComments: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "aComment"
-    }]
+    }] 
 })
 
 userSchema.set("toJSON", {

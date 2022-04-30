@@ -15,6 +15,10 @@ const aCommentSchema = new mongoose.Schema({
         maxLength: 140,
         minLength: 1
     },
+    date: {
+        type: Date,
+        default: () => new Date()
+    }
 })
 
 aCommentSchema.set("toJSON", {
