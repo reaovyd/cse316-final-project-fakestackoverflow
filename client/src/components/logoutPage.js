@@ -13,6 +13,7 @@ const LogoutPage = () => {
         loginCrud.verifyTokenExist(token).then(res => {
             if(res.data.permission === "user") {
                 window.localStorage.removeItem("token")
+                window.sessionStorage.removeItem("token")
                 setDisplay(<p>Logging out...</p>)
             }
             navigate("/")

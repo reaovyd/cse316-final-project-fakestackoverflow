@@ -6,7 +6,7 @@ import {
     Link, useNavigate
 } from "react-router-dom"
 
-const Button = ({text, setDisplay, style, perms, where}) => {
+const Button = ({text, id, perms, where}) => {
     const navigate = useNavigate()
     const handleDisplay = () => {
         if(perms === "guest") {
@@ -21,7 +21,7 @@ const Button = ({text, setDisplay, style, perms, where}) => {
     }
     return (
         <div className="welcome-button">
-            <Link to={`/${where}`} href="#"style={style} onClick={handleDisplay}>{text}</Link>
+            <Link className={id} to={`/${where}`} href="#" onClick={handleDisplay}>{text}</Link>
         </div>
     )
 }
@@ -31,9 +31,9 @@ const MiddleBox = () => {
     const initialDisplay = (
             <div className="middle-box-inside">
                 <h2><span className="unbold">Fake</span>StackOverflow</h2>
-                <Button where={"login"}style={{backgroundColor: "#33f9ff", color: "#cc0600"}} text={"Log In"} setDisplay={setDisplay} perms={"login"}/>
-                <Button where={"signup"}style={{backgroundColor: "#b2e6df", color: "#4d1920"}} text={"Sign Up"} setDisplay={setDisplay} perms={"signup"}/>
-                <Button where={""} style={{backgroundColor: "#aefff3", color: "#51000c"}} text={"Continue As Guest"} setDisplay={setDisplay} perms={"guest"}/>
+                <Button where={"login"} id={"login-button"} text={"Log In"} setDisplay={setDisplay} perms={"login"}/>
+                <Button where={"signup"} id={"sign-up-button"} text={"Sign Up"} setDisplay={setDisplay} perms={"signup"}/>
+                <Button where={""} id={"guest-button"} text={"Continue As Guest"} setDisplay={setDisplay} perms={"guest"}/>
         </div>
     )
     useEffect(() => {
@@ -53,16 +53,17 @@ export default function Welcome() {
     const token = window.localStorage.getItem("token")
     const sessionToken = window.sessionStorage.getItem("token")
     useEffect(() => {
-       loginCrud.verifyTokenExist(token).then(res => {
-           navigate("/home")
-       }).catch(err => {
-           loginCrud.verifyTokenExist(sessionToken).then(res => {
+           loginCrud.verifyTokenExist(token).then(res => {
                navigate("/home")
            }).catch(err => {
-               setDisplay(<MiddleBox />)
+               loginCrud.verifyTokenExist(sessionToken).then(res => {
+                   navigate("/home")
+               }).catch(err => {
+                   setDisplay(<MiddleBox />)
+               })
            })
-       })
     }, [])
+
     return(
         <div>
             {display} 

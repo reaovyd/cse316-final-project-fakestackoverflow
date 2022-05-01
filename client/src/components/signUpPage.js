@@ -32,6 +32,7 @@ const SignUpPage = () => {
                 navigate("/")
             }
         }).catch(err => {
+            navigate("/signup")
         })
     }, [])
     const handleSubmit = (e) => {

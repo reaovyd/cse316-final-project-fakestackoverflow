@@ -9,19 +9,15 @@ import SignUpPage from './signUpPage';
 import LoginPage from './loginPage';
 import LogoutPage from './logoutPage';
 import QuestionsPage from './questionsPage';
-import dbCrud from './crud/dbCrud';
 
 const FakeStackOverflow = () => {
     const navigate = useNavigate()
     const [allQuestions, setAllQuestions] = useState([])
-    const [allUsers, setAllUsers] = useState([])
-    const [allTags, setAllTags] = useState([])
     useEffect(() => {
         // depending on if user has valid token
         var token = window.localStorage.token 
         var sessionGuestToken = window.sessionStorage.token
         if (token === undefined && sessionGuestToken === undefined) {
-            navigate("/welcome")
         } else {
             loginCrud.verifyTokenExist(token).then(res => {
                 navigate("/home")
@@ -38,7 +34,7 @@ const FakeStackOverflow = () => {
     return (
         <div>
             <Routes>
-                <Route path="*" element={<Navigate replace to="/" />}/>
+                <Route path="*" element={<Navigate replace to="/welcome" />}/>
                 <Route path="/" element={<Navigate replace to={"/welcome"}/>} />
                 <Route path="/welcome" element={<Welcome />} />
                 <Route path="/home" element={<Home />} />

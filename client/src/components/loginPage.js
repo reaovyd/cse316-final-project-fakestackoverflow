@@ -29,6 +29,7 @@ const LoginPage = () => {
                 navigate("/")
             }
         }).catch(err => {
+            console.log(err)
         })
     }, [])
     const handleSubmit = (e) => {
