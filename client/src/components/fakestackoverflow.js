@@ -9,36 +9,35 @@ import SignUpPage from './signUpPage';
 import LoginPage from './loginPage';
 import LogoutPage from './logoutPage';
 import QuestionsPage from './questionsPage';
+import SingleQuestionPage from './singleQuestionPage';
 
 const FakeStackOverflow = () => {
-    const navigate = useNavigate()
-    const [allQuestions, setAllQuestions] = useState([])
-    useEffect(() => {
-        // depending on if user has valid token
-        var token = window.localStorage.token 
-        var sessionGuestToken = window.sessionStorage.token
-        if (token === undefined && sessionGuestToken === undefined) {
-        } else {
-            loginCrud.verifyTokenExist(token).then(res => {
-                navigate("/home")
-            }).catch(err => {
-                loginCrud.verifyTokenExist(sessionGuestToken).then(res => {
-                    navigate("/welcome")
-                }).catch((err) => {
-                    navigate("/welcome")
-                })
-            })
-        }
+    //const navigate = useNavigate()
+    //const [allQuestions, setAllQuestions] = useState([])
+    //useEffect(() => {
+    //    // depending on if user has valid token
+    //    var token = window.localStorage.token 
+    //    var sessionGuestToken = window.sessionStorage.token
+    //    if (token === undefined && sessionGuestToken === undefined) {
+    //    } else {
+    //        loginCrud.verifyTokenExist(token).then(res => {
+    //        }).catch(err => {
+    //            loginCrud.verifyTokenExist(sessionGuestToken).then(res => {
+    //            }).catch((err) => {
+    //            })
+    //        })
+    //    }
 
-    }, [])
+    //}, [])
     return (
         <div>
             <Routes>
-                <Route path="*" element={<Navigate replace to="/welcome" />}/>
+                <Route path="*" element={<Navigate replace to={"/welcome"}/>} />
                 <Route path="/" element={<Navigate replace to={"/welcome"}/>} />
                 <Route path="/welcome" element={<Welcome />} />
                 <Route path="/home" element={<Home />} />
-                <Route path="/home/questions" element={<QuestionsPage setAllQuestions={setAllQuestions} questions={allQuestions}/>} />
+                <Route path="/home/questions" element={<QuestionsPage />}/>
+                <Route path="/home/questions/question/:id" element={<SingleQuestionPage />} />
                 <Route path="/signup" element={<SignUpPage />}/>
                 <Route path="/login" element={<LoginPage/>}/>
                 <Route path="/logout" element={<LogoutPage />}/>

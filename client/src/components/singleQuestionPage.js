@@ -1,33 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect} from 'react';
 import loginCrud from './crud/loginCrud';
-import dbCrud from './crud/dbCrud';
-import NavigationBar from './navigationBar';
 import {
-    Link, useNavigate
+    Link, useNavigate, useParams
 } from "react-router-dom"
 
-const AllQuestions = () => {
-    const [allQuestions, setAllQuestions] = useState('')
-    useEffect(() => {
-    })
+const SingleQuestionPageDisplay = ({questionId}) => {
     return (
-        <div>
-            <NavigationBar />
-        </div>
+        <>{questionId}</>
     )
 }
 
-export default function QuestionsPage() {
+export default function SingleQuestionPage() {
     const navigate = useNavigate()
     const [display, setDisplay] = useState(<></>)
     const token = window.localStorage.getItem("token")
     const sessionToken = window.sessionStorage.getItem("token")
+    const { id } = useParams()
+
     useEffect(() => {
        loginCrud.verifyTokenExist(token).then(res => {
-           setDisplay(<AllQuestions />)
+           setDisplay(<SingleQuestionPageDisplay questionId={id}/>)
        }).catch(err => {
            loginCrud.verifyTokenExist(sessionToken).then(res => {
-               setDisplay(<AllQuestions />)
+               setDisplay(<SingleQuestionPageDisplay questionId={id}/>)
            }).catch(err => {
                navigate("/welcome")
            })
