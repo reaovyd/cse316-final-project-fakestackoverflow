@@ -1,0 +1,85 @@
+.middle-box {
+    position: fixed;
+    background-color: #fcfcfc;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    padding: 200px;
+    border: solid 1px;
+}
+
+.middle-box-inside {
+    text-align: center;
+    padding: 0px;
+}
+
+.welcome-button {
+    margin: 30px;
+}
+
+.welcome-button a{
+    color: white;
+    font-weight: bold;
+    padding: 10px;
+    text-decoration: none;
+    border-radius: 15px;
+}
+
+.unbold {
+    font-weight: normal;
+}
+
+.signup-user-form {
+    transform: translate(0%, -30%);
+    height: 300px;
+}
+.signup-user-form-fso {
+    transform: translate(5%, -60px)
+}
+.signup-user-form .signup-margin-headings {
+    transform: translate(-50%, -10%)
+}
+
+.signup-user-form .signup-margin-headings input {
+    text-align: center;
+    margin-top: 30px;
+    width: 200%;
+    resize: none;
+    font-family: Sans-Serif;
+    font-size: 20px;
+}
+
+.signup-user-form .signup-margin-headings input[type="text"],
+.signup-user-form .signup-margin-headings input[type="password"]{
+    line-height: 2em;
+}
+
+.signup-user-form .signup-margin-headings input[type="submit"] { 
+    padding: 20px;
+    width: 70%;
+    font-size: 13px;
+    transform: translate(95%, 0%);
+    background-color: lightblue; 
+    border: solid;
+    border-color: lightblue;
+    border-radius: 7px;
+    color: #2f10a1;
+    font-weight: bold;
+}
+.main-error-list {
+    transform: translate(50%, 0)
+}
+
+ul.main-error-list{
+    transform: translate(50%, 0);
+    font-size: 13px;
+    color: #db7777;
+    list-style-type: none;
+}
+
+ul.main-correct-list{
+    transform: translate(50%, 0);
+    font-size: 13px;
+    color: #05c406;
+    list-style-type: none;
+}

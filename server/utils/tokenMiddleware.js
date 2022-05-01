@@ -1,5 +1,5 @@
 const getBearer = (req, res, next) => {
-    const auth = req.get("authorization")
+    const auth = req.body.authorization || req.get("authorization")
     if(auth === undefined || !auth.match(/^[Bb]earer /)) {
         const e = new Error("Invalid Bearer")
         e.name = "InvalidBearerToken"

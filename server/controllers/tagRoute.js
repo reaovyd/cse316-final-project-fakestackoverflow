@@ -7,14 +7,14 @@ api.use(tokenMiddleware.getBearer)
 
 api.get("/", async (req, res, next) => {
     jwt.verify(req.token, JWT_SECRET)
-    const getAllTags = await Tag.find({})
+    const getAllTags = await Tag.find({}).populate("questions")
     res.status(200).json(getAllTags)
 })
 
 // TODO mayb?
 api.get("/:id", async (req, res, next) => {
     jwt.verify(req.token, JWT_SECRET)
-    const getAllTags = await Tag.findById(req.params.id)
+    const getAllTags = await Tag.findById(req.params.id).populate("questions")
     res.status(200).json(getAllTags)
 })
 
