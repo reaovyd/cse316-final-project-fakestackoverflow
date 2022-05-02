@@ -5,16 +5,15 @@ import {
 } from "react-router-dom"
 import NavigationBar from './navigationBar';
 
-const SingleQuestionPageDisplay = ({questionId}) => {
+const SingleUserPageDisplay = ({userId}) => {
     return (
         <div>
         <NavigationBar />
-        {questionId}
         </div>
     )
 }
 
-export default function SingleQuestionPage() {
+export default function SingleUserPage() {
     const navigate = useNavigate()
     const [display, setDisplay] = useState(<></>)
     const token = window.localStorage.getItem("token")
@@ -23,10 +22,10 @@ export default function SingleQuestionPage() {
 
     useEffect(() => {
        loginCrud.verifyTokenExist(token).then(res => {
-           setDisplay(<SingleQuestionPageDisplay questionId={id}/>)
+           setDisplay(<SingleUserPageDisplay userId={id}/>)
        }).catch(err => {
            loginCrud.verifyTokenExist(sessionToken).then(res => {
-               setDisplay(<SingleQuestionPageDisplay questionId={id}/>)
+               setDisplay(<SingleUserPageDisplay userId={id}/>)
            }).catch(err => {
                navigate("/welcome")
            })

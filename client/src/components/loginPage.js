@@ -49,6 +49,7 @@ const LoginPage = () => {
                 setErrors(<ul className={"main-correct-list"}>{listCorrect}</ul>)
                 const token = res.data.token
                 window.localStorage.setItem("token", token)
+                window.sessionStorage.removeItem("token")
                 setTimeout(() => {
                     navigate("/")
                 }, 400)

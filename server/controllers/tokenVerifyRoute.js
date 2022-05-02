@@ -6,10 +6,19 @@ api.use(tokenMiddleware.getBearer)
 
 api.post("/", async (req, res, next) => {
     const payload = jwt.verify(req.token, JWT_SECRET) 
-    res.status(200).json({
+    const resJSON = {
         message: "valid jwt",
-        permission: payload.registered ? "user" : "guest" 
-    })
+        permission: payload.registered ? "user" : "guest",
+        userid: payload.registered ? payload.id : undefined,
+        username: payload.registered ? payload.username : undefined
+    }
+    if(resJSON.userid === undefined) {
+        delete resJSON.userid
+    }
+    if(resJSON.username === undefined) {
+        delete resJSON.username
+    }
+    res.status(200).json(resJSON)
 })
 
 module.exports = api

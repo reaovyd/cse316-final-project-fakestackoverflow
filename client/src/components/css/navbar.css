@@ -21,17 +21,24 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 1%;
+    padding: 15px 2%;
+    font-size: 1.5vw;
     background-color: hsl(210, 4%, 95%);
 }
 
 .nav-links {
     list-style: none;
+    width: 100%;
 }
 
 .input-search {
     width: 20%;
-    font-size: 18px;
+    font-size: 1.8vw;
+}
+#search-bar-exclusive, textarea{
+    border: 1px solid;
+    border-color: hsl(206, 64%, 51%);
+    outline: none !important;
 }
 
 .nav-links li {
@@ -41,7 +48,7 @@ header {
 
 .nav-links li a {
     transition: all 0.3s ease 0s;
-    padding: 10px;
+    padding: 4px;
     background-color: hsl(210, 4%, 95%);
     color: black;
 }

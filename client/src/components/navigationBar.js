@@ -17,11 +17,11 @@ const SearchInput = () => {
     const handleSearch = (e) => {
         if(e.key === "Enter") {
             setSearchParams({search: e.target.value})
-            console.log(searchParams.get("search"))
+            //console.log(searchParams.get("search"))
         }
     }
     return(
-        <input onKeyPress={handleSearch} className="input-search" onChange={handleInput} value={inputText} placeholder={"Search"}/>
+        <input id={"search-bar-exclusive"} onKeyPress={handleSearch} className="input-search" onChange={handleInput} value={inputText} placeholder={" 🔎 Search"}/>
     )
 }
 
@@ -30,6 +30,9 @@ const NavigationBar = () => {
     const [loginLink, setLoginLink] = useState("/login")
     const [displaySignUp, setDisplaySignUp] = useState('Sign up') // if not sign up display ask question button
     const [displaySignUpLink, setDisplaySignUpLink] = useState('/signup') // if not sign up display ask question button
+    const [displayUserProfile, setDisplayUserProfile] = useState(false)
+    const [displayUserProfileLink, setDisplayUserProfileLink] = useState('')
+    const [displayUserProfileLinkName, setDisplayUserProfileLinkName] = useState('')
 
     useEffect(() => {
         const token = window.localStorage.getItem("token")
@@ -39,6 +42,9 @@ const NavigationBar = () => {
                 setLoginLink("/logout")
                 setDisplaySignUp("Create Question")
                 setDisplaySignUpLink('/home/questions/create')
+                setDisplayUserProfile(true)
+                setDisplayUserProfileLink(`/home/users/user/${res.data.userid}`)
+                setDisplayUserProfileLinkName(res.data.username)
             }
         }).catch(err => {
 
@@ -52,6 +58,7 @@ const NavigationBar = () => {
                     <ul className="nav-links">
                         <li><Link to="/home/questions">Questions</Link></li>
                         <li><Link to="/home/tags">Tags</Link></li>
+        {displayUserProfile ? <li><Link to={`${displayUserProfileLink}`}><span className="signup-color">{displayUserProfileLinkName}</span></Link></li> : <></>}
                         <li><Link to={`${loginLink}`}><span className="login-color">{loginText}</span></Link></li>
                         <li><Link to={`${displaySignUpLink}`}><span className="signup-color">{displaySignUp}</span></Link></li>
                     </ul>

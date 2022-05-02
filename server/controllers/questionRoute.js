@@ -14,7 +14,7 @@ api.use(tokenMiddleware.getBearer)
 
 api.get("/",  async (req, res, next) => {
     jwt.verify(req.token, JWT_SECRET)
-    const allQuestions = await Question.find({}).populate("tags").populate("qComments") 
+    const allQuestions = await Question.find({}).populate("tags").populate("qComments").populate("user") 
     res.status(200).json(allQuestions)
 })
 
@@ -76,7 +76,7 @@ api.post("/",  questionMiddleware.validBody, async (req, res, next) => {
 
 api.get("/:id", async (req, res, next) => {
     jwt.verify(req.token, JWT_SECRET)
-    const question = await Question.findById(req.params.id)
+    const question = await Question.findById(req.params.id).populate("tags")
     if(question === undefined || question === null) {
         const e = new Error("Question may have been deleted or does not exist")
         e.name = "UnknownUserError"
@@ -117,7 +117,7 @@ api.put("/:id/votes/:sentiment", async (req, res, next) => {
         throw e
     }
 
-    var userKarma = await User.findById(question.user)
+    var userKarma = await User.findById(payload.id)
     if(userKarma.reputation < 100) {
         const e = new Error("User does not have enough reputation")
         e.name = "OutOfBoundsReputationError"

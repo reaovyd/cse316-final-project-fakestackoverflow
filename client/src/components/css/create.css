@@ -1,0 +1,52 @@
+.middle-box-create {
+    position: fixed;
+    background-color: #fcfcfc;
+    transform: translate(-50%, -50%);
+    top: 53%;
+    width: 600px;
+    left: 50%;
+    height: 720px;
+    padding: 200px;
+    border: solid 1px;
+}
+.middle-box-create-inside {
+    position: absolute;
+    left: 4%;
+    top: 1%;
+    padding: 0px;
+    font-size: 19px;
+    text-align: center;
+}
+.create-input-margin textarea{
+    position: relative;
+    width: 550px;
+    font-family: Sans-Serif;
+    height: 115px;
+    resize: none;
+}
+.middle-box-create-inside input[type="submit"] {
+    color: hsl(206, 90%, 74%);
+    background-color: hsl(210, 4%, 95%);
+    border-color: hsl(0, 0%, 24%);
+    border-radius: 10px;
+    border-width: 1px;
+    font-weight: bold;
+    margin-top: 2%;
+    padding: 10px;
+}
+
+.create-main-error-list {
+    font-size: 14px;
+    margin-top: 1%;
+}
+ul.create-main-error-list {
+    list-style-type: none;
+    color: #db7777;
+    list-style-type: none;
+}
+
+ul.create-main-correct-list{
+    font-size: 14px;
+    color: #05c406;
+    list-style-type: none;
+}

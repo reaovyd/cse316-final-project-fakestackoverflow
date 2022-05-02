@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema({
     },
     reputation: {
         type: Number,
-        default: 105
+        default: 125
     },
     creationDate: {
         type: Date,
