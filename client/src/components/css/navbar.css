@@ -31,6 +31,14 @@ header {
     width: 100%;
 }
 
+.nav-links .active {
+    background-color: red;
+}
+
+.nav-links .inactive {
+    background-color: none;
+}
+
 .input-search {
     width: 20%;
     font-size: 1.8vw;

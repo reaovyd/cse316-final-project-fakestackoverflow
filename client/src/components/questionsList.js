@@ -15,7 +15,6 @@ const QuestionBox = ({question}) => {
         String(today.getDate()).padStart(2, "0")+",", String(today.getFullYear())].join(" ")
     const askedAt = [String(today.getHours()).padStart(2, "0"), String(today.getMinutes()).padStart(2, "0")].join(":")
     const questionTime = askedOn + " " + askedAt;
-    console.log(questionTime)
 
     return (
         <div className="question-box">

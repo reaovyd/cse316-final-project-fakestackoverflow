@@ -76,7 +76,7 @@ api.post("/",  questionMiddleware.validBody, async (req, res, next) => {
 
 api.get("/:id", async (req, res, next) => {
     jwt.verify(req.token, JWT_SECRET)
-    const question = await Question.findById(req.params.id).populate("tags")
+    const question = await Question.findById(req.params.id).populate("tags").populate("answers")
     if(question === undefined || question === null) {
         const e = new Error("Question may have been deleted or does not exist")
         e.name = "UnknownUserError"

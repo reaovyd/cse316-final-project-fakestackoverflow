@@ -5,8 +5,6 @@ import {
     Link, useNavigate, useSearchParams
 } from "react-router-dom"
 
-
-// TODO search input should link to 
 const SearchInput = () => {
     const [inputText, setInputText] = useState('')
     let [searchParams, setSearchParams] = useSearchParams()
@@ -14,10 +12,11 @@ const SearchInput = () => {
         e.preventDefault();
         setInputText(e.target.value)
     }
+    const navigate = useNavigate()
     const handleSearch = (e) => {
         if(e.key === "Enter") {
-            setSearchParams({search: e.target.value})
-            //console.log(searchParams.get("search"))
+            // THE PROXY IS GOATED
+            navigate("/home/questions/searchProxy", {state: {text: e.target.value}})
         }
     }
     return(
