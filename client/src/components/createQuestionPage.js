@@ -43,7 +43,7 @@ const CreateQuestion = () => {
             var listErrorList = errorList.map((error, i)=> <li key={i}>{error}</li>)
             setErrors(<ul className={"create-main-error-list"}>{listErrorList}</ul>)
         } else {
-            const sendTags = tags.split(/\s+/)
+            const sendTags = [...new Set(tags.split(/\s+/))].filter(elem => elem.length !== 0)
             const token = window.localStorage.getItem("token")
             dbCrud.postQuestion(token, title, text, summary, sendTags).then(res => {
                 var listCorrect = [<li key={1}>{"Question successfully posted!"}</li>, <li key={2}>{"Redirecting back to home page"}</li>]

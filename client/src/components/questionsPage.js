@@ -16,11 +16,14 @@ const AllQuestions = ({token}) => {
             currentAllQuestions.sort((a, b) => {
 			    return Date.parse(new Date(a.ansOn + " " + a.ansAt)) - Date.parse(new Date(b.ansOn + " " + b.ansAt)) > 0 ? -1 : 1
             })
-            const currentAllQuestionsLength = Math.floor(currentAllQuestions.length / 5 + 1)
+            const currentAllQuestionsLength = currentAllQuestions.length !== 0 ? Math.floor(currentAllQuestions.length / 5 + 1) : 0
+            console.log(currentAllQuestions)
+            console.log(currentAllQuestionsLength)
+
             var displayQuestions = [] 
             for(let i = 0; i < currentAllQuestionsLength; ++i) {
                 var questionBox = []
-                for(let j = i * 5; j < i + 5 && j < currentAllQuestions.length; ++j) {
+                for(let j = i * 5; j < i * 5 + 5 && j < currentAllQuestions.length; ++j) {
                     questionBox.push(currentAllQuestions[j])
                 }
                 displayQuestions.push(questionBox)

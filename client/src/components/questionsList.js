@@ -13,8 +13,9 @@ const QuestionBox = ({question}) => {
 
     const askedOn = [today.toLocaleString("default", {month: "long"}).slice(0, 3),
         String(today.getDate()).padStart(2, "0")+",", String(today.getFullYear())].join(" ")
-    const askedAt = [String(today.getHours()).padStart(2, "0"), String(today.getMinutes())].join(":")
+    const askedAt = [String(today.getHours()).padStart(2, "0"), String(today.getMinutes()).padStart(2, "0")].join(":")
     const questionTime = askedOn + " " + askedAt;
+    console.log(questionTime)
 
     return (
         <div className="question-box">
@@ -51,30 +52,48 @@ const QuestionBox = ({question}) => {
     )
 }
 
-const Button = ({clickFunction, name}) => {
+const Button = ({style, clickFunction, name}) => {
     return (
-        <button className={"btn-navigation"}>{name}</button>
+        <button onClick={clickFunction}className={style ? "btn-navigation-stop" : "btn-navigation" }>{name}</button>
     )
 }
 
 export default function QuestionsList({questions}) {
     const [display, setDisplay] = useState(<></>)
     const [page, setPage] = useState(0)
+    const [prevStyle, setPrevStyle] = useState(false)
+    const [nextStyle, setNextStyle] = useState(false)
     useEffect(() => {
         if(questions.length === 0) { // set to no results found or smth
-            setDisplay(<></>)
+            setDisplay(<>No Questions Found.</>)
         } else {
             setDisplay(questions[page].map((question, i) => <QuestionBox key={i} question={question} />))
+            if(page === 0) {
+                setPrevStyle(true)
+            }
+            if(page === questions.length - 1) {
+                setNextStyle(true)
+            }
         }
     }, [])
     const handleNextClick = () =>{
         if(page + 1 < questions.length) {
+            setDisplay(questions[page + 1].map((question, i) => <QuestionBox key={i} question={question} />))
+            setPrevStyle(false)
+            if(page + 2 >= questions.length) {
+                setNextStyle(true)
+            }
             setPage(page + 1)
         }
     }
 
     const handlePrevClick = () =>{
         if(page - 1 >= 0) {
+            setDisplay(questions[page - 1].map((question, i) => <QuestionBox key={i} question={question} />))
+            setNextStyle(false)
+            if(page - 1 <= 0) {
+                setPrevStyle(true)
+            }
             setPage(page - 1)
         }
     }
@@ -83,15 +102,15 @@ export default function QuestionsList({questions}) {
         <div>
             <div className="flex-container">
                 {display}
-                <div className="flex-sub-container">
+        {questions.length !== 0 ? <div className="flex-sub-container">
                     <div className="btn-item">
-                        <Button clickFunction={handlePrevClick} className={"btn-navigation"} name={"Prev"}/>
+                        <Button style={prevStyle}clickFunction={handlePrevClick} className={"btn-navigation"} name={"Prev"}/>
                     </div>
                     <div className="btn-item">
-                        <Button clickFunction={handleNextClick} className={"btn-navigation"} name={"Next"}/>
+                        <Button style={nextStyle}clickFunction={handleNextClick} className={"btn-navigation"} name={"Next"}/>
                     </div>
-                </div>
-            </div>
+                </div>: <></>}
+            </div> 
         </div>
     )
 }

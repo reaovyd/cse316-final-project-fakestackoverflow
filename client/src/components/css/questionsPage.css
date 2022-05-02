@@ -99,14 +99,21 @@
     transform: translate(-50%, -40%);
     background-color: hsl(206, 95%, 86%);
     color: hsl(206, 64%, 51%);
-    cursor: pointer;
     border-color: hsl(206, 95%, 86%);
     border: 1px solid;
     border-radius: 8px;
 }
 
 .flex-sub-container .btn-item button:hover {
-    filter: brightness(70%)
+    filter: brightness(70%);
+}
+
+button.btn-navigation-stop {
+    filter: brightness(70%);
+    cursor: default;
+}
+button.btn-navigation {
+    cursor: pointer;
 }
 
 a.link-stuff {
