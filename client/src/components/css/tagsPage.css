@@ -1,0 +1,31 @@
+* {
+    margin: 0;
+    padding: 0;
+    border-style: border-box;
+}
+
+.main-flex-container-tags {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.subbox-flex-container-tags {
+    display: flex;
+}
+.subbox-flex-container-item {
+    padding: 2vw;
+    border: 1px solid;
+    margin-right: 10px;
+    margin-top: 10px;
+    color: hsl(0, 0%, 24%);
+}
+.subbox-flex-container-item-item a {
+    color: hsl(206, 100%, 60%);
+    text-decoration: none;
+}
+
+.subbox-flex-container-item-item a:hover {
+    filter: brightness(50%);
+    text-decoration: none;
+}

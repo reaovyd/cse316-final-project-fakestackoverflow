@@ -51,7 +51,8 @@ api.post("/",  questionMiddleware.validBody, async (req, res, next) => {
         text: req.body.text,
         summary: req.body.summary
     })
-    
+    // TODO consider user thing; it actually might be a lot easier to put it with tag given my laziness 
+    // actually this is optimal since we do it in O(Tags) and len(Tags) = O(users) usually 
     for(let name of newTags) {
         const newTag = new Tag({
             name

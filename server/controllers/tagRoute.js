@@ -14,7 +14,12 @@ api.get("/", async (req, res, next) => {
 // TODO mayb?
 api.get("/:id", async (req, res, next) => {
     jwt.verify(req.token, JWT_SECRET)
-    const getAllTags = await Tag.findById(req.params.id).populate("questions")
+    const getAllTags = await Tag.findById(req.params.id).populate({
+        path:"questions",
+        populate: [{
+            path: "user",
+        }, {path: "tags"}]
+    })
     res.status(200).json(getAllTags)
 })
 

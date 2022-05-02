@@ -28,7 +28,7 @@ const AllQuestions = ({token, param}) => {
                         }
                     }
                     for (let text of getTextOnly) {
-                        if(elem.summary.indexOf(text) !== -1 || elem.text.indexOf(text) !== -1 || elem.title.indexOf(text) !== -1) {
+                        if(elem.summary.toLowerCase().indexOf(text) !== -1 || elem.text.toLowerCase().indexOf(text) !== -1 || elem.title.toLowerCase().indexOf(text) !== -1) {
                             return true;
                         }
                     }
