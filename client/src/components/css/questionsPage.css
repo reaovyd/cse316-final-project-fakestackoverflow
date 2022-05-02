@@ -84,6 +84,36 @@
     color: hsl(206, 100%, 60%);
 }
 
-.btn-navigation {
+.flex-sub-container {
+    display: flex;
+}
 
+.flex-sub-container .btn-item  {
+    margin-right: 20px;
+}
+.flex-sub-container .btn-item button {
+    font-size: 1.2vw;
+    padding-top: 2px;
+    padding-left: 14px;
+    padding-right: 14px;
+    transform: translate(-50%, -40%);
+    background-color: hsl(206, 95%, 86%);
+    color: hsl(206, 64%, 51%);
+    cursor: pointer;
+    border-color: hsl(206, 95%, 86%);
+    border: 1px solid;
+    border-radius: 8px;
+}
+
+.flex-sub-container .btn-item button:hover {
+    filter: brightness(70%)
+}
+
+a.link-stuff {
+    text-decoration: none;
+    color: hsl(209, 56%, 43%);
+}
+
+a:hover.link-stuff {
+    color: hsl(206, 64%, 51%);
 }

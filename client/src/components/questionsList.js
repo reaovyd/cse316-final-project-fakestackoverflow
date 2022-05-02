@@ -6,7 +6,7 @@ import {
 import './css/questionsPage.css' 
 
 const QuestionBox = ({question}) => {
-    const questionTitle = (<Link to={`/home/questions/question/${question._id}`}>{question.title}</Link>)
+    const questionTitle = (<Link className={"link-stuff"} to={`/home/questions/question/${question._id}`}>{question.title}</Link>)
     const questionSummary = question.summary
     const questionTags = question.tags.map((tag, i) => <div key={i} className="tag-item">{tag.name}</div>)
     const today = new Date(Date.parse(question.date))
@@ -83,9 +83,13 @@ export default function QuestionsList({questions}) {
         <div>
             <div className="flex-container">
                 {display}
-                <div>
-                    <Button className={"btn-navigation"} name={"Prev"}/>
-                    <Button className={"btn-navigation"} name={"Next"}/>
+                <div className="flex-sub-container">
+                    <div className="btn-item">
+                        <Button clickFunction={handlePrevClick} className={"btn-navigation"} name={"Prev"}/>
+                    </div>
+                    <div className="btn-item">
+                        <Button clickFunction={handleNextClick} className={"btn-navigation"} name={"Next"}/>
+                    </div>
                 </div>
             </div>
         </div>
