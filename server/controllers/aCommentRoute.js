@@ -60,7 +60,7 @@ api.post("/", async (req, res, next) => {
     // should also contain the qid of the question
 
     const newComment = await newAComment.save()
-    const display = await AComment.findById(newComment._id) 
+    const display = await AComment.findById(newComment._id).populate("user")
 
     res.status(201).json(display)
 })

@@ -6,6 +6,7 @@ import {
 } from "react-router-dom"
 import NavigationBar from './navigationBar';
 import "./css/singleQuestionPage.css"
+let USER_LOGGED_IN = false
 
 const SmallMiddlebar = ({answerCount, voteCount, viewCount, qid}) => {
     const [errors, setErrors] = useState(<></>)
@@ -266,8 +267,17 @@ const AnswerDisplayBox = ({singleAnswer}) => {
     const [page, setPage] = useState(0)
     const [inputText, setInput] = useState('')
     const [errors, setErrors] = useState(<></>)
+    const [votes, setVotes] = useState(singleAnswer.votes)
+    const [voteError, setVoteErrors] = useState(<></>)
+    const [notLoggedIn, setNotLoggedIn] = useState(true)
     useEffect(() => {
         setComments(divideAnArray(singleAnswer.aComments, 3).filter(elem => elem.length !== 0))
+        const token = window.localStorage.getItem("token")
+        loginCrud.verifyTokenExist(token).then(res => {
+            setNotLoggedIn(false)
+        }).catch(err => {
+            setNotLoggedIn(true)
+        })
     }, [])
     const handleNextClick = () =>{
         if(page + 1 < comments.length) {
@@ -288,6 +298,24 @@ const AnswerDisplayBox = ({singleAnswer}) => {
             }, 1700)
         } else {
 
+            const token = window.localStorage.getItem("token")
+            dbCrud.postAnswerComment(token, inputText, singleAnswer._id).then(res => {
+            setComments(newCommentsCreator(comments,res.data,3).filter(elem => elem.length !== 0))
+
+            var errorsDisplay = [<li key={1}className={"comment-success"}>{"Comment Posted Successfully!"}</li>]
+            setErrors(<ul className="comment-unordered-list-success">{errorsDisplay}</ul>) 
+            setTimeout(() => {
+                setErrors(<></>)
+            }, 1700)
+
+        }).catch(err => {
+            console.log(err.response.data)
+                var errorsDisplay = [<li key={1} className={"comment-errors-question"}> {err.response.data.message}</li>]
+                setErrors(<ul className="comment-unordered-list-error">{errorsDisplay}</ul>)
+                setTimeout(() => {
+                    setErrors(<></>)
+                }, 1700)
+            })
         }
     }
 
@@ -300,20 +328,48 @@ const AnswerDisplayBox = ({singleAnswer}) => {
         e.preventDefault()
         setInput(e.target.value)
     }
-    // TODO input write comment
-    // answer question
+    const handleAnswerUpvote = () => {
+        const token = window.localStorage.getItem("token")
+        dbCrud.updateAnswerVote(token, singleAnswer._id, "positive").then(res => {
+            setVotes(votes + 1)
+        }).catch(err => {
+            if(err.response && (err.response.data.message === "jwt malformed" || err.response.data.error === "UnregisteredUserError")) {
+                setVoteErrors(<div style={{"color": "red"}}>{"Please log in to vote"}</div>)
+            } else {
+                setVoteErrors(<div style={{"color":"red"}}>{err.response.data.message}</div>)
+            }
+            setTimeout(() => {
+                setVoteErrors(<></>)
+            }, 1500)
+        })
+    }
+    const handleAnswerDownvote = () => {
+        const token = window.localStorage.getItem("token")
+        dbCrud.updateAnswerVote(token, singleAnswer._id, "negative").then(res => {
+            setVotes(votes - 1)
+        }).catch(err => {
+            if(err.response && (err.response.data.message === "jwt malformed" || err.response.data.error === "UnregisteredUserError")) {
+                setVoteErrors(<div style={{"color": "red"}}>{"Please log in to vote"}</div>)
+            } else {
+                setVoteErrors(<div style={{"color":"red"}}>{err.response.data.message}</div>)
+            }
+            setTimeout(() => {
+                setVoteErrors(<></>)
+            }, 1500)
+        })
+    }
     return (
         <div className="single-answer-display-flex">
             <div className="single-answer-first">
                 <div className="single-answer-first-vote">
                     <div className="single-answer-first-vote-item">
-                        <button>Like</button>
+                        <button onClick={handleAnswerUpvote}>Like</button>
                     </div>
                     <div className="single-answer-first-vote-item">
-                        {singleAnswer.votes} votes
+                        {votes} 
                     </div>
                     <div className="single-answer-first-vote-item">
-                        <button>Dislike</button>
+                        <button onClick={handleAnswerDownvote}>Dislike</button>
                     </div>
                 </div>
                 <div className="single-answer-first-text">
@@ -334,11 +390,12 @@ const AnswerDisplayBox = ({singleAnswer}) => {
             <div className="single-answer-end">
                 <div className="single-answer-end-item">
                     <form onSubmit={handleSubmit}>
-                        <label htmlFor={"a-comment"}>
-                            <input value={inputText} onChange={handleInputChange} placeholder={"Write A Comment"}/>
+                        <label className="a-comment" htmlFor={"a-comment"}>
+        {notLoggedIn ? <></> : <input value={inputText} onChange={handleInputChange} placeholder={"Write A Comment"}/>}
                         </label>
                     </form>
                     {errors}
+                    {voteError}
                 </div>
                 <div className="single-answer-end-item buttons">
                     <div className="single-answer-end-item buttons-item">
@@ -498,9 +555,11 @@ export default function SingleQuestionPage() {
 
     useEffect(() => {
        loginCrud.verifyTokenExist(token).then(res => {
+           USER_LOGGED_IN = true
            setDisplay(<SingleQuestionPageDisplay token={token} questionId={id}/>)
        }).catch(err => {
            loginCrud.verifyTokenExist(sessionToken).then(res => {
+           USER_LOGGED_IN = false
                setDisplay(<SingleQuestionPageDisplay token={sessionToken} questionId={id}/>)
            }).catch(err => {
                navigate("/welcome")

@@ -247,3 +247,12 @@
 .single-answer-end-item {
     margin-bottom: 2px;
 }
+.a-comment a{
+    text-decoration: none;
+    color: hsl(206, 95%, 46%);
+}
+
+.a-comment a:hover{
+    text-decoration: none;
+    filter: brightness(50%)
+}

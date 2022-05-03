@@ -45,6 +45,16 @@ const postQuestionComment = async(token, comment, qid) => {
     return newComment
 }
 
+const postAnswerComment = async(token, comment, aid) => {
+    const headers = {
+        comment,
+        aid,
+        authorization: `Bearer ${token}`
+    }
+    const newComment = await axios.post(`${baseURL}/acomments`, headers)
+    return newComment
+}
+
 const updateQuestionVote = async(token, qid, sentiment) => {
     const headers = {
         authorization: `Bearer ${token}`
@@ -53,4 +63,12 @@ const updateQuestionVote = async(token, qid, sentiment) => {
     return updateQuestionVote
 }
 
-export default { fetchQuestions, postQuestion, fetchSingleQuestion, postQuestionComment , updateQuestionVote};
+const updateAnswerVote = async(token, aid, sentiment) => {
+    const headers = {
+        authorization: `Bearer ${token}`
+    }
+    const answerVote = await axios.put(`${baseURL}/answers/${aid}/votes/${sentiment}`, headers)
+    return answerVote 
+}
+
+export default { fetchQuestions, postQuestion, fetchSingleQuestion, postQuestionComment , updateQuestionVote, postAnswerComment, updateAnswerVote};

@@ -69,7 +69,7 @@ api.post("/", async(req, res, next) => {
     res.status(201).json(display)
 })
 
-api.post("/:id/votes/:sentiment", async (req, res, next) => {
+api.put("/:id/votes/:sentiment", async (req, res, next) => {
     const payload = jwt.verify(req.token, JWT_SECRET)
     const answer = await Answer.findById(req.params.id)
     if(answer === undefined || answer === null) {
