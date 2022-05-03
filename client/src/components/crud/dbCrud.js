@@ -12,6 +12,16 @@ const fetchQuestions = async(token) => {
     return questions
 }
 
+const fetchSingleQuestion = async(token, id) => {
+    const question = await axios.get(`${baseURL}/questions/${id}`, {
+        headers: {
+            authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+        },
+    }); 
+    return question 
+}
+
 const postQuestion = async(token, title, text, summary, tags) => {
     const headers = {
         title,
@@ -25,4 +35,22 @@ const postQuestion = async(token, title, text, summary, tags) => {
     return newQuestion 
 }
 
-export default { fetchQuestions, postQuestion };
+const postQuestionComment = async(token, comment, qid) => {
+    const headers = {
+        comment,
+        qid,
+        authorization: `Bearer ${token}`
+    }
+    const newComment = await axios.post(`${baseURL}/qcomments`, headers)
+    return newComment
+}
+
+const updateQuestionVote = async(token, qid, sentiment) => {
+    const headers = {
+        authorization: `Bearer ${token}`
+    }
+    const updateQuestionVote = await axios.put(`${baseURL}/questions/${qid}/votes/${sentiment}`, headers)
+    return updateQuestionVote
+}
+
+export default { fetchQuestions, postQuestion, fetchSingleQuestion, postQuestionComment , updateQuestionVote};

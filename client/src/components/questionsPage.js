@@ -14,7 +14,7 @@ const AllQuestions = ({token}) => {
         dbCrud.fetchQuestions(token).then(res => {
             const currentAllQuestions = res.data
             currentAllQuestions.sort((a, b) => {
-			    return Date.parse(new Date(a.ansOn + " " + a.ansAt)) - Date.parse(new Date(b.ansOn + " " + b.ansAt)) > 0 ? -1 : 1
+			    return Date.parse(a.date) - Date.parse(b.date) > 0 ? -1 : 1
             })
             const currentAllQuestionsLength = currentAllQuestions.length !== 0 ? Math.floor(currentAllQuestions.length / 5 + 1) : 0
 

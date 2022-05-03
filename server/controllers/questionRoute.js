@@ -77,26 +77,29 @@ api.post("/",  questionMiddleware.validBody, async (req, res, next) => {
 
 api.get("/:id", async (req, res, next) => {
     jwt.verify(req.token, JWT_SECRET)
-    const question = await Question.findById(req.params.id).populate("tags").populate("answers")
+    var question = await Question.findById(req.params.id)
     if(question === undefined || question === null) {
         const e = new Error("Question may have been deleted or does not exist")
         e.name = "UnknownUserError"
         throw e
     }
-    res.status(200).json(question)
-})
-
-api.put("/:id/views", async (req, res, next) => {
-    jwt.verify(req.token, JWT_SECRET)
-    const question = await Question.findById(req.params.id)
-    if(question === undefined || question === null) {
-        const e = new Error("User may have been deleted or does not exist")
-        e.name = "UnknownUserError"
-        throw e
-    }
     question.views += 1
-    await Question.findByIdAndUpdate(question._id, question, {new: true})
-    res.status(201).json(question)
+    var questionDisplay = await Question.findByIdAndUpdate(question._id, question, {new: true}).populate("tags").populate(
+        {path:"answers", 
+            populate:[
+                {
+                    path: "user"
+                }, 
+                {
+                    path:"aComments", 
+                    populate: {
+                        path: "user"
+                    } 
+                }
+            ]
+        }
+    ).populate("user").populate({path: "qComments", populate: {path: "user"}})
+    res.status(200).json(questionDisplay)
 })
 
 api.put("/:id/votes/:sentiment", async (req, res, next) => {
@@ -108,7 +111,7 @@ api.put("/:id/votes/:sentiment", async (req, res, next) => {
         throw e
     }
     if(payload.registered === false) {
-        const e = new Error("Unregistered user")
+        const e = new Error("Unregistered user cannot vote.")
         e.name = "UnregisteredUserError"
         throw e
     }

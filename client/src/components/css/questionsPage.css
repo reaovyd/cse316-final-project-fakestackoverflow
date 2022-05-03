@@ -6,7 +6,7 @@
 
 .flex-container {
     display: flex;
-    width: 80%;
+    width: 70%;
     flex-direction: column;
     background-color: white;
     justify-content: center;
@@ -19,9 +19,10 @@
 
 .small-items {
     display: flex;
+    margin-left: 1%;
 }
 .small-items .item {
-    margin-right: 1%
+    margin-right: 1%;
 }
 
 .question-box {
@@ -29,10 +30,12 @@
     height: 300px;
     margin-top: 2%;
     margin-left: 1%;
+    border: 1px solid;
 }
 
 .larger-item {
     overflow-wrap: break-word;
+    margin-left: 1%;
 }
 
 .larger-item.summary {
@@ -46,6 +49,7 @@
     font-size: 1.5vw;
     flex-wrap: wrap;
     color: hsl(210, 7%, 61%);
+    margin-left: 1%;
 }
 
 .tag-item {
@@ -88,13 +92,15 @@
 
 .flex-sub-container .btn-item  {
     margin-right: 20px;
+    margin-bottom: 30px;
+    margin-top: 10px;
 }
 .flex-sub-container .btn-item button {
     font-size: 1.2vw;
     padding-top: 2px;
     padding-left: 14px;
     padding-right: 14px;
-    transform: translate(-50%, -40%);
+    transform: translate(-50%, 10%);
     background-color: hsl(206, 95%, 86%);
     color: hsl(206, 64%, 51%);
     border-color: hsl(206, 95%, 86%);
