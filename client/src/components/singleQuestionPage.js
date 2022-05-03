@@ -6,7 +6,6 @@ import {
 } from "react-router-dom"
 import NavigationBar from './navigationBar';
 import "./css/singleQuestionPage.css"
-let USER_LOGGED_IN = false
 
 const SmallMiddlebar = ({answerCount, voteCount, viewCount, qid}) => {
     const [errors, setErrors] = useState(<></>)
@@ -410,7 +409,7 @@ const AnswerDisplayBox = ({singleAnswer}) => {
     )
 }
 
-const AnswersDisplayProxy = ({currentAnswers}) => {
+const AnswersDisplayProxy = ({currentAnswers, qid}) => {
     const [answers, setAnswers] = useState(<></>) 
     const [page, setPage] = useState(0)
     useEffect(() => {
@@ -459,7 +458,7 @@ const AnswersDisplayProxy = ({currentAnswers}) => {
                     </div>
                     <div className="sub-last-row-item">
                         <div className="sub-last-row-item-item">
-                            <Link to="#">Answer Question</Link>
+                            <Link to={`/home/questions/${qid}/create`}>Answer Question</Link>
                         </div>
                     </div>
                 </div>
@@ -508,12 +507,6 @@ const Display = ({singleQuestion}) => {
     }
     const theArray = divideAnArray(answers, 5).filter(elem => elem.length !== 0)
 
-    //for(let ans of answers) {
-    //    console.log(ans.aComments.length)
-    //}
-    //console.log(divideAnArray(answers, 5))
-
-
     return (
         <div className="main-display-single-question">
             <TopBar title={title} text={text} tags={tags} username={username} mainTime={mainTime} qComments={displayQComments} qid={singleQuestion._id}/>
@@ -522,7 +515,7 @@ const Display = ({singleQuestion}) => {
                     <SmallMiddlebar qid={singleQuestion._id} answerCount={answers.length} voteCount={votes} viewCount={views}/>
                 </div>
             </div>
-            <AnswersDisplayProxy currentAnswers={theArray}/>
+            <AnswersDisplayProxy qid={singleQuestion._id} currentAnswers={theArray}/>
         </div>
     )
 }
@@ -555,11 +548,9 @@ export default function SingleQuestionPage() {
 
     useEffect(() => {
        loginCrud.verifyTokenExist(token).then(res => {
-           USER_LOGGED_IN = true
            setDisplay(<SingleQuestionPageDisplay token={token} questionId={id}/>)
        }).catch(err => {
            loginCrud.verifyTokenExist(sessionToken).then(res => {
-           USER_LOGGED_IN = false
                setDisplay(<SingleQuestionPageDisplay token={sessionToken} questionId={id}/>)
            }).catch(err => {
                navigate("/welcome")

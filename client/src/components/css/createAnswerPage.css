@@ -1,0 +1,40 @@
+* {
+    padding: 0;
+    margin: 0;
+    border-style: border-box;
+}
+
+.flex-box-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.flex-box-container-item-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-box-container-item-form textarea{
+    width: 1000px;
+    height: 800px;
+    resize: none;
+}
+
+.flex-box-container-item-form input[type="submit"]{
+    margin-top: 10px;
+    padding: 10px;
+    width: 20%;
+    margin-left: 40%;
+    font-size: 18px;
+    background-color: hsl(206, 64%, 51%);
+    border-color: hsl(206, 64%, 51%);
+    border-radius: 8px;
+    color: hsl(205, 100%, 95%);
+}
+
+.flex-box-container-item-form input[type="submit"]:hover{
+    cursor: pointer;
+}

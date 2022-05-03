@@ -16,6 +16,7 @@ import SearchQuestionsPage from './searchQuestionPage';
 import SearchQuestionProxy from './searchQuestionProxy';
 import TagsPage from './tagsPage';
 import SingleTagsPage from './singleTagPage';
+import CreateAnswerPage from './createAnswerPage';
 
 const FakeStackOverflow = () => {
     //const navigate = useNavigate()
@@ -50,6 +51,7 @@ const FakeStackOverflow = () => {
                 <Route path="/home/questions/searchproxy" element={<SearchQuestionProxy />}/>
                 <Route path="/home/questions/create" element={<CreateQuestionPage />} />
                 <Route path="/home/users/user/:id" element={<SingleUserPage />} />
+                <Route path="/home/questions/:id/create" element={<CreateAnswerPage/>}/>
                 <Route path="/signup" element={<SignUpPage />}/>
                 <Route path="/login" element={<LoginPage/>}/>
                 <Route path="/logout" element={<LogoutPage />}/>

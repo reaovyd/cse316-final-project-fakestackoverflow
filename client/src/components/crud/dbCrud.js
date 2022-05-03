@@ -71,4 +71,14 @@ const updateAnswerVote = async(token, aid, sentiment) => {
     return answerVote 
 }
 
-export default { fetchQuestions, postQuestion, fetchSingleQuestion, postQuestionComment , updateQuestionVote, postAnswerComment, updateAnswerVote};
+const postAnswer = async(token, qid, text) => {
+    const headers = {
+        text,
+        qid,
+        authorization: `Bearer ${token}`
+    }
+    const newAnswer = await axios.post(`${baseURL}/answers`, headers)
+    return newAnswer 
+}
+
+export default { fetchQuestions, postQuestion, fetchSingleQuestion, postQuestionComment , updateQuestionVote, postAnswerComment, updateAnswerVote, postAnswer};
