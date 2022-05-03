@@ -38,9 +38,27 @@
     margin-bottom: 3px;
 }
 
+.main-display-single-question-item.answers {
+    max-height: 670px;
+    overflow: auto;
+}
+
 .small-middlebar-text-vote-item button.dislike-button{
     border-color: hsl(206, 95%, 86%);
-    color: hsl(27, 100%, 68.4%);;
+}
+
+.acomment-display {
+    display: flex;
+    flex-direction: column;
+    overflow-wrap: break-word;
+}
+
+.acomment-display-item {
+    display: flex;
+    justify-content: space-between;
+}
+.the-actual-comment-item.text {
+    width: 90%;
 }
 
 .small-middlebar-text-vote-item button:hover{
@@ -140,4 +158,92 @@
 
 .q-comment-set-item .q-comment-itself.comments {
     width: 80%;
+}
+
+.sub-last-row-item {
+    display: flex;
+    margin-left: 19%;
+    margin-right: -8px;
+}
+.main-display-single-question-item .to-flex-on-this {
+    display: flex;
+    justify-content: end;
+    overflow: hidden;;
+}
+
+.main-display-single-question-item .to-flex-on-this button {
+    padding: 10px;
+    font-size: 20px;
+    background-color:hsl(206, 90%, 74%);
+    color: hsl(206, 91%, 91.5%);
+    border-color: hsl(206, 90%, 74%);
+}
+
+.main-display-single-question-item .to-flex-on-this button:hover {
+    filter: brightness(90%);
+    cursor: pointer;
+}
+
+.sub-last-row-item a{
+    padding: 18px;
+    font-size: 24px;
+    background-color:hsl(206, 90%, 74%);
+    color: hsl(206, 91%, 91.5%);
+    border-color: hsl(206, 90%, 74%);
+    border: 1px solid;
+    text-decoration:none;
+}
+
+.sub-last-row-item a:hover {
+    filter: brightness(90%)
+}
+
+.single-answer-display-flex {
+    display: flex;
+    flex-direction: column;
+}
+
+.single-answer-first {
+    display: flex;
+    justify-content: space-between;
+}
+
+.single-answer-first .single-answer-first-text {
+    overflow-wrap: break-word;
+    width: 80%;
+    margin-left: 10px;
+}
+.single-answer-first-vote-item button{
+    padding: 10px;
+    width: 70px;
+}
+.single-answer-first-answerby {
+    margin-left: 15px;
+}
+.single-answer-end {
+    display: flex;
+    justify-content: space-between;
+}
+.single-answer-end-item.buttons {
+    display: flex;
+}
+.single-answer-end-item.buttons button , .single-answer-first-vote-item button{
+    padding: 12px;
+    background-color: hsl(206, 100%, 60%);;
+    color: hsl(206, 95%, 86%);
+    border-color: hsl(206, 95%, 86%);
+    border: 1px solid;
+}
+
+.single-answer-end-item.buttons button:hover, .single-answer-first-vote-item button:hover{
+    cursor: pointer;
+    filter: brightness(60%);
+}
+.single-answer-end-item input{
+    font-size: 25px;
+    width: 165%;
+}
+
+.single-answer-end-item {
+    margin-bottom: 2px;
 }

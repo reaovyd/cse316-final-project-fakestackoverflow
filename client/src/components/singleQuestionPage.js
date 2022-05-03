@@ -85,7 +85,7 @@ const QCommentInput = ({set, text, placeholder, setErrors, qid, comments, setCom
                 const token = window.localStorage.getItem("token")
                 dbCrud.postQuestionComment(token, e.target.value, qid).then(res => {
                     var errorsDisplay = [<li key={1}className={"comment-success"}>{"Comment Posted Successfully!"}</li>]
-                    setComments(newCommentsCreator(comments, res.data))
+                    setComments(newCommentsCreator(comments, res.data, 3))
                     setErrors(<ul className="comment-unordered-list-success">{errorsDisplay}</ul>) 
                     setTimeout(() => {
                         setErrors(<></>)
@@ -115,7 +115,22 @@ const parseDate = (askDate) => {
 
 }
 
-const newCommentsCreator = (matrix, newComment) => {
+const divideAnArray = (newArray, dividingFactor) => {
+    const currentAllQCommentsLength = newArray.length !== 0 ? Math.floor(newArray.length / dividingFactor+ 1) : 0
+
+    var toReturn = [] 
+    for(let i = 0; i < currentAllQCommentsLength; ++i) {
+        var questionCommentBox = []
+        for(let j = i * dividingFactor; j < i * dividingFactor+ dividingFactor && j < newArray.length; ++j) {
+            questionCommentBox.push(newArray[j])
+        }
+        toReturn.push(questionCommentBox)
+    }
+    
+    return toReturn
+}
+
+const newCommentsCreator = (matrix, newComment, dividingFactor) => {
     var newArray = []
     newArray.push(newComment)
     for (let i = 0; i < matrix.length; ++i) {
@@ -123,18 +138,7 @@ const newCommentsCreator = (matrix, newComment) => {
             newArray.push(matrix[i][j])
         }
     }
-
-    const currentAllQCommentsLength = newArray.length !== 0 ? Math.floor(newArray.length / 3 + 1) : 0
-
-    var toReturn = [] 
-    for(let i = 0; i < currentAllQCommentsLength; ++i) {
-        var questionCommentBox = []
-        for(let j = i * 3; j < i * 3 + 3 && j < newArray.length; ++j) {
-            questionCommentBox.push(newArray[j])
-        }
-        toReturn.push(questionCommentBox)
-    }
-    return toReturn
+    return divideAnArray(newArray, dividingFactor)
 }
 
 const AllQCommentDisplay = ({qCommentSet}) => {
@@ -232,10 +236,146 @@ const TopBar = ({title, text, tags, username, mainTime, qComments, qid}) => {
     )
 }
 
+const AllACommentDisplay = ({aCommentSet}) => {
+    return (
+        <div className={"acomment-display"}>
+            <div className="acomment-display-item">
+                <div className="the-actual-comment-item text">
+                   WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW 
+                </div>
+                <div className="the-actual-comment-item">
+                    By user<br/>
+                    At thistime
+                </div>
+            </div>
+            <hr/>
+            <div className="acomment-display-item">
+                a
+            </div>
+            <div className="acomment-display-item">
+                a
+            </div>
+        </div>
+    )
+}
+
+const AnswerDisplayBox = ({singleAnswer}) => {
+    const [comments, setComments] = useState(divideAnArray(singleAnswer.aComments, 3).filter(elem => elem.length !== 0))
+    const [page, setPage] = useState(0)
+    const handleNextClick = () =>{
+        if(page + 1 < comments.length) {
+            setPage(page + 1)
+        }
+    }
+
+    const handlePrevClick = () =>{
+        if(page - 1 >= 0) {
+            setPage(page - 1)
+        }
+    }
+    console.log(comments)
+    return (
+        <div className="single-answer-display-flex">
+            <div className="single-answer-first">
+                <div className="single-answer-first-vote">
+                    <div className="single-answer-first-vote-item">
+                        <button>Like</button>
+                    </div>
+                    <div className="single-answer-first-vote-item">
+                        {singleAnswer.votes} votes
+                    </div>
+                    <div className="single-answer-first-vote-item">
+                        <button>Dislike</button>
+                    </div>
+                </div>
+                <div className="single-answer-first-text">
+                    {singleAnswer.text}
+                </div>
+                <div className="single-answer-first-answerby">
+                    <div className="single-answer-first-answerby-item">
+                        Answer By {singleAnswer.user.username}
+                    </div>
+                    <div className="single-answer-first-answerby-item">
+                        At {parseDate(singleAnswer.date)}
+                    </div>
+                </div>
+            </div>
+            <div className="single-answer-middle">
+                {comments.length === 0 ? "No Comments Found" : <AllACommentDisplay aCommentSet={comments[page]}/>}
+            </div>
+            <div className="single-answer-end">
+                <div className="single-answer-end-item">
+                    <input placeholder={"Write A Comment"}/>
+                </div>
+                <div className="single-answer-end-item buttons">
+                    <div className="single-answer-end-item buttons-item">
+                        <button>Prev</button>    
+                    </div>
+                    <div className="single-answer-end-item buttons-item">
+                        <button>Next</button>    
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+const AnswerDisplay = ({answers}) => {
+    const [display, setDisplay] = useState(<div style={{"textAlign": "center"}}>{"No Answers Were Found"}</div>)
+    useEffect(() => {
+
+    }, [])
+    return (
+        <div className="answer-display-flex">
+            <AnswerDisplayBox singleAnswer={answers[0]}/>
+            <hr/>
+            <AnswerDisplayBox singleAnswer={answers[1]}/>
+            <hr/>
+            <AnswerDisplayBox singleAnswer={answers[2]}/>
+        </div>
+    )
+}
+
+const AnswersDisplayProxy = ({currentAnswers}) => {
+    const [answers, setAnswers] = useState(divideAnArray(currentAnswers, 5)) 
+    const [page, setPage] = useState(0)
+    
+    //console.log(answers[0].user.username)
+    //console.log(answers[0].aComments)
+    //console.log(answers[0].text)
+    //console.log(answers[0].votes)
+    //console.log(answers[0].date)
+    
+    return (
+        <div>
+            <div className="main-display-single-question-item answers">
+                <AnswerDisplay answers={answers[page]}/>
+            </div>
+            <div className="main-display-single-question-item">
+                <div className="to-flex-on-this">
+                    <div className="sub-last-row-item">
+                        <div className="sub-last-row-item-item">
+                            <button>Prev</button>
+                        </div>
+                        <div className="sub-last-row-item-item">
+                            <button>Next</button>
+                        </div>
+                    </div>
+                    <div className="sub-last-row-item">
+                        <div className="sub-last-row-item-item">
+                            <Link to="#">Answer Question</Link>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
+
 const Display = ({singleQuestion}) => {
     // dont need summary console.log("summary", singleQuestion.summary)
     const askDate = singleQuestion.date
-    const qComments = singleQuestion.qComments
+    var qComments = singleQuestion.qComments
     qComments.sort((a, b) => {
         return Date.parse(a.date) - Date.parse(b.date) > 0 ? -1 : 1
     })
@@ -250,6 +390,7 @@ const Display = ({singleQuestion}) => {
         }
         displayQComments.push(questionCommentBox)
     }
+    displayQComments = displayQComments.filter(arr => arr.length !== 0) 
 
     const title = singleQuestion.title 
     const text = singleQuestion.text 
@@ -260,6 +401,9 @@ const Display = ({singleQuestion}) => {
     const views = singleQuestion.views
     const votes = singleQuestion.votes
     const answers = singleQuestion.answers
+    answers.sort((a, b) => {
+        return Date.parse(a.date) - Date.parse(b.date) > 0 ? -1 : 1
+    })
 
     return (
         <div className="main-display-single-question">
@@ -269,12 +413,7 @@ const Display = ({singleQuestion}) => {
                     <SmallMiddlebar qid={singleQuestion._id} answerCount={answers.length} voteCount={votes} viewCount={views}/>
                 </div>
             </div>
-            <div className="main-display-single-question-item">
-                Item 3
-            </div>
-            <div className="main-display-single-question-item">
-                Item 4
-            </div>
+            <AnswersDisplayProxy currentAnswers={answers}/>
         </div>
     )
 }
