@@ -237,24 +237,26 @@ const TopBar = ({title, text, tags, username, mainTime, qComments, qid}) => {
 }
 
 const AllACommentDisplay = ({aCommentSet}) => {
+    const displayComments = aCommentSet.map((comment, i) => {
+        return (
+            <div key={i}>
+                <div className="acomment-display-item">
+                    <div className="the-actual-comment-item text">
+                        {comment.comment}
+                    </div>
+                    <div className="the-actual-comment-item">
+                        By {comment.user.username}<br/>
+                        At {parseDate(comment.date)} 
+                    </div>
+                </div>
+                <hr size={1}/>
+            </div>
+        )
+    })
     return (
         <div className={"acomment-display"}>
-            <div className="acomment-display-item">
-                <div className="the-actual-comment-item text">
-                   WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW 
-                </div>
-                <div className="the-actual-comment-item">
-                    By user<br/>
-                    At thistime
-                </div>
-            </div>
-            <hr/>
-            <div className="acomment-display-item">
-                a
-            </div>
-            <div className="acomment-display-item">
-                a
-            </div>
+            <hr size={1}/>
+            {displayComments}
         </div>
     )
 }
@@ -262,9 +264,30 @@ const AllACommentDisplay = ({aCommentSet}) => {
 const AnswerDisplayBox = ({singleAnswer}) => {
     const [comments, setComments] = useState(divideAnArray(singleAnswer.aComments, 3).filter(elem => elem.length !== 0))
     const [page, setPage] = useState(0)
+    const [inputText, setInput] = useState('')
+    const [errors, setErrors] = useState(<></>)
+    useEffect(() => {
+        setComments(divideAnArray(singleAnswer.aComments, 3).filter(elem => elem.length !== 0))
+    }, [])
     const handleNextClick = () =>{
         if(page + 1 < comments.length) {
             setPage(page + 1)
+        }
+    }
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        const errors = {
+            commentEmpty : inputText.length === 0 ? "Comment cannot be empty!" : false,
+            commentMax : inputText.length > 140 ? "Comment cannot be over 140 characters!" : false
+        }
+        var errorsDisplay = Object.values(errors).filter(elem => elem !== false).map((error, i) =><li key={i}className={"comment-errors-question"}>{error}</li>)
+        if(errorsDisplay.length > 0) {
+            setErrors(<ul className="comment-unordered-list-error">{errorsDisplay}</ul>)
+            setTimeout(() => {
+                setErrors(<></>)
+            }, 1700)
+        } else {
+
         }
     }
 
@@ -273,7 +296,12 @@ const AnswerDisplayBox = ({singleAnswer}) => {
             setPage(page - 1)
         }
     }
-    console.log(comments)
+    const handleInputChange = (e) => {
+        e.preventDefault()
+        setInput(e.target.value)
+    }
+    // TODO input write comment
+    // answer question
     return (
         <div className="single-answer-display-flex">
             <div className="single-answer-first">
@@ -305,60 +333,71 @@ const AnswerDisplayBox = ({singleAnswer}) => {
             </div>
             <div className="single-answer-end">
                 <div className="single-answer-end-item">
-                    <input placeholder={"Write A Comment"}/>
+                    <form onSubmit={handleSubmit}>
+                        <label htmlFor={"a-comment"}>
+                            <input value={inputText} onChange={handleInputChange} placeholder={"Write A Comment"}/>
+                        </label>
+                    </form>
+                    {errors}
                 </div>
                 <div className="single-answer-end-item buttons">
                     <div className="single-answer-end-item buttons-item">
-                        <button>Prev</button>    
+                        <button onClick={handlePrevClick}>Prev</button>    
                     </div>
                     <div className="single-answer-end-item buttons-item">
-                        <button>Next</button>    
+                        <button onClick={handleNextClick}>Next</button>    
                     </div>
                 </div>
             </div>
-        </div>
-    )
-}
-
-const AnswerDisplay = ({answers}) => {
-    const [display, setDisplay] = useState(<div style={{"textAlign": "center"}}>{"No Answers Were Found"}</div>)
-    useEffect(() => {
-
-    }, [])
-    return (
-        <div className="answer-display-flex">
-            <AnswerDisplayBox singleAnswer={answers[0]}/>
-            <hr/>
-            <AnswerDisplayBox singleAnswer={answers[1]}/>
-            <hr/>
-            <AnswerDisplayBox singleAnswer={answers[2]}/>
         </div>
     )
 }
 
 const AnswersDisplayProxy = ({currentAnswers}) => {
-    const [answers, setAnswers] = useState(divideAnArray(currentAnswers, 5)) 
+    const [answers, setAnswers] = useState(<></>) 
     const [page, setPage] = useState(0)
-    
-    //console.log(answers[0].user.username)
-    //console.log(answers[0].aComments)
-    //console.log(answers[0].text)
-    //console.log(answers[0].votes)
-    //console.log(answers[0].date)
+    useEffect(() => {
+        if(currentAnswers.length > 0) {
+            setAnswers(currentAnswers.map((elem, i) => {
+                const elemArray = elem.map((val, j) => {
+                    return (<div key={j}>
+                            <AnswerDisplayBox singleAnswer={val}/>
+                        </div>)
+                })
+                return (
+                    <div key={i} className="answer-display-flex">
+                        {elemArray}
+                    </div>
+                )
+            }))
+        }
+    }, [])
+    const handleNextClick = () =>{
+        if(page + 1 < currentAnswers.length) {
+            setPage(page + 1)
+        }
+    }
+
+    const handlePrevClick = () =>{
+        if(page - 1 >= 0) {
+            setPage(page - 1)
+        }
+    }
+
     
     return (
         <div>
             <div className="main-display-single-question-item answers">
-                <AnswerDisplay answers={answers[page]}/>
+                {currentAnswers.length === 0 ? <>No Answers Found</> : answers[page]}
             </div>
             <div className="main-display-single-question-item">
                 <div className="to-flex-on-this">
                     <div className="sub-last-row-item">
                         <div className="sub-last-row-item-item">
-                            <button>Prev</button>
+                            <button onClick={handlePrevClick}>Prev</button>
                         </div>
                         <div className="sub-last-row-item-item">
-                            <button>Next</button>
+                            <button onClick={handleNextClick}>Next</button>
                         </div>
                     </div>
                     <div className="sub-last-row-item">
@@ -405,6 +444,19 @@ const Display = ({singleQuestion}) => {
         return Date.parse(a.date) - Date.parse(b.date) > 0 ? -1 : 1
     })
 
+    for(let ans of answers) {
+        ans.aComments.sort((a, b) => {
+            return Date.parse(a.date) - Date.parse(b.date) > 0 ? -1 : 1
+        })
+    }
+    const theArray = divideAnArray(answers, 5).filter(elem => elem.length !== 0)
+
+    //for(let ans of answers) {
+    //    console.log(ans.aComments.length)
+    //}
+    //console.log(divideAnArray(answers, 5))
+
+
     return (
         <div className="main-display-single-question">
             <TopBar title={title} text={text} tags={tags} username={username} mainTime={mainTime} qComments={displayQComments} qid={singleQuestion._id}/>
@@ -413,7 +465,7 @@ const Display = ({singleQuestion}) => {
                     <SmallMiddlebar qid={singleQuestion._id} answerCount={answers.length} voteCount={votes} viewCount={views}/>
                 </div>
             </div>
-            <AnswersDisplayProxy currentAnswers={answers}/>
+            <AnswersDisplayProxy currentAnswers={theArray}/>
         </div>
     )
 }
