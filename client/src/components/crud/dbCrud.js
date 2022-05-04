@@ -91,4 +91,16 @@ const deleteAnswer = async(token, aid) => {
     return newAnswer 
 }
 
-export default { fetchQuestions, postQuestion, fetchSingleQuestion, postQuestionComment , updateQuestionVote, postAnswerComment, updateAnswerVote, postAnswer, deleteAnswer};
+const updateAnswerAll = async(token, aid, data) => {
+    const headers = {
+        authorization: `Bearer ${token}`,
+        text: {
+            toEdit: true,
+            data 
+        } 
+    }
+    const answerVote = await axios.put(`${baseURL}/answers/${aid}`, headers)
+    return answerVote 
+}
+
+export default { fetchQuestions, postQuestion, fetchSingleQuestion, postQuestionComment , updateQuestionVote, postAnswerComment, updateAnswerVote, postAnswer, deleteAnswer, updateAnswerAll};

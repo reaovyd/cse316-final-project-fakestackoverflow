@@ -117,3 +117,38 @@
 .ans-box-subdisplay-item.edit-delete-ans a:hover {
     filter: brightness(50%);
 }
+
+form.form-ans-update {
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+}
+.form-ans-update-item.text-input textarea{
+    resize: none;
+    width: 750px;
+    height: 540px;
+}
+
+.form-ans-unordered-list-success {
+    color: hsl(140, 35%, 54.5%);
+    text-align: center;
+    list-style-type: none;
+}
+
+.form-ans-unordered-list-error {
+    color: red;
+    text-align: center;
+    list-style-type: none;
+}
+
+.form-ans-update-item.button-input input[type="submit"] {
+    padding: 10px;
+    color: hsl(206, 100%, 90%);
+    background-color: hsl(206, 100%, 40%);
+}
+
+.form-ans-update-item.button-input input[type="submit"]:hover{
+    filter: brightness(70%);
+    cursor: pointer;
+}
