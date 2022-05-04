@@ -15,7 +15,7 @@ api.get("/", tokenMiddleware.getBearer, async(req, res, next) => {
 api.get("/:id", tokenMiddleware.getBearer, async(req, res, next) => {
     jwt.verify(req.token, JWT_SECRET)
 
-    const user = await User.findById(req.params.id).populate('qComments', {user: 0}).populate('questions', {user: 0}).populate('aComments', {user: 0}).populate({path:"answers", populate:{path:"user"}}).populate('tags') 
+    const user = await User.findById(req.params.id).populate('qComments', {user: 0}).populate({path:"questions", populate:[{path:"tags"}, {path:"user"}]}).populate('aComments', {user: 0}).populate({path:"answers", populate:{path:"user"}}).populate('tags') 
     if(user === null) {
         const e = new Error("User may have been deleted or does not exist")
         e.name = "UnknownUserError"

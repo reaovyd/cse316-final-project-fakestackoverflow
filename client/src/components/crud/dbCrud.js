@@ -82,13 +82,23 @@ const postAnswer = async(token, qid, text) => {
 }
 
 const deleteAnswer = async(token, aid) => {
-    const newAnswer = await axios.delete(`${baseURL}/answers/${aid}`, {
+    const deleteAnswerPromise = await axios.delete(`${baseURL}/answers/${aid}`, {
         headers: {
             authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
         },
     }); 
-    return newAnswer 
+    return deleteAnswerPromise 
+}
+
+const deleteQuestion = async(token, qid) => {
+    const deleteQuestionPromise = await axios.delete(`${baseURL}/questions/${qid}`, {
+        headers: {
+            authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+        },
+    }); 
+    return deleteQuestionPromise 
 }
 
 const updateAnswerAll = async(token, aid, data) => {
@@ -99,8 +109,28 @@ const updateAnswerAll = async(token, aid, data) => {
             data 
         } 
     }
-    const answerVote = await axios.put(`${baseURL}/answers/${aid}`, headers)
-    return answerVote 
+    const answerUpdate = await axios.put(`${baseURL}/answers/${aid}`, headers)
+    return answerUpdate
 }
 
-export default { fetchQuestions, postQuestion, fetchSingleQuestion, postQuestionComment , updateQuestionVote, postAnswerComment, updateAnswerVote, postAnswer, deleteAnswer, updateAnswerAll};
+const updateQuestionAll = async(token, qid, titleData, textData, summaryData) => {
+    const headers = {
+        authorization: `Bearer ${token}`,
+        title: {
+            toEdit: true,
+            data: titleData 
+        }, 
+        text: {
+            toEdit: true,
+            data: textData 
+        }, 
+        summary: {
+            toEdit: true,
+            data: summaryData 
+        }, 
+    }
+    const questionUpdate = await axios.put(`${baseURL}/questions/${qid}`, headers)
+    return questionUpdate 
+}
+
+export default { fetchQuestions, postQuestion, fetchSingleQuestion, postQuestionComment , updateQuestionVote, postAnswerComment, updateAnswerVote, postAnswer, deleteAnswer, updateAnswerAll, deleteQuestion, updateQuestionAll};

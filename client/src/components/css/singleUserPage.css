@@ -33,7 +33,6 @@
 
 .bottom-part-item.sidebar {
     margin-right: 20px;
-    border: 1px solid; /* FOR DEV only */
 }
 
 
@@ -111,6 +110,7 @@
     overflow: auto;
 }
 
+
 .ans-box-subdisplay-item.edit-delete-ans a {
     color: hsl(206, 100%, 60%);
 }
@@ -151,4 +151,56 @@ form.form-ans-update {
 .form-ans-update-item.button-input input[type="submit"]:hover{
     filter: brightness(70%);
     cursor: pointer;
+}
+
+.main-questions-display-box-user-page {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid;
+}
+
+.sub-question-display-box-item.top-part {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 3px;
+}
+.sub-question-display-box-item.middle-summary-part {
+    overflow-wrap: break-word;
+    height: 100px;
+}
+.sub-question-display-box-item.tags-part {
+    max-height: 80px;
+    overflow: auto;
+    border: 1px solid;
+}
+
+.ans-box-subdisplay-item.next-prev-ans button {
+    background-color: hsl(206, 100%, 40%);
+    color: hsl(206, 100%, 90%);
+    padding: 6px;
+}
+
+.form-question-update {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.form-question-update textarea{
+    width: 600px;
+    height: 160px;
+    margin-bottom: 7px;
+    resize: none;
+}
+
+.main-questions-display-box-user-page-item a {
+    color: hsl(206, 100%, 60%);
+}
+.main-questions-display-box-user-page-item a:hover {
+    filter: brightness(50%);
+
+}
+
+.sub-question-display-box-item.middle-summary-part {
+    margin-left: 3px;
 }
