@@ -26,6 +26,7 @@ const AllQuestions = ({token}) => {
                 }
                 displayQuestions.push(questionBox)
             }
+            var displayQuestions = displayQuestions.filter(elem => elem.length !== 0)
             setDisplay(<QuestionsList questions={displayQuestions}/>)
         }).catch(err => {
             console.error(err.response.data)

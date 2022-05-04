@@ -81,4 +81,14 @@ const postAnswer = async(token, qid, text) => {
     return newAnswer 
 }
 
-export default { fetchQuestions, postQuestion, fetchSingleQuestion, postQuestionComment , updateQuestionVote, postAnswerComment, updateAnswerVote, postAnswer};
+const deleteAnswer = async(token, aid) => {
+    const newAnswer = await axios.delete(`${baseURL}/answers/${aid}`, {
+        headers: {
+            authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+        },
+    }); 
+    return newAnswer 
+}
+
+export default { fetchQuestions, postQuestion, fetchSingleQuestion, postQuestionComment , updateQuestionVote, postAnswerComment, updateAnswerVote, postAnswer, deleteAnswer};

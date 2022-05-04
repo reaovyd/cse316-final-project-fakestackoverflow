@@ -1,0 +1,119 @@
+* {
+    padding: 0;
+    margin: 0;
+    border-style: border-box;
+}
+
+.user-page-parts {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.user-page-parts-item {
+    padding: 10px;
+    background-color: white;
+    border-color: red;
+    border: 1px solid;
+    margin-top: 10px;
+    width: 900px;
+}
+.user-page-parts-item.top-part {
+    height: 80px;
+    max-width: 900px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.user-page-parts-item.bottom-part {
+    display: flex;
+    max-width: 900px;
+    width: 900px;
+}
+
+.bottom-part-item.sidebar {
+    margin-right: 20px;
+    border: 1px solid; /* FOR DEV only */
+}
+
+
+.bottom-part-item-display {
+    width: 775px;
+    height: 640px;
+    max-height: 640px;
+    overflow: auto;
+}
+
+/* for tags*/
+
+.tags-box-display-flex-item {
+    display: flex;
+    justify-content: left;
+    margin-bottom: 4px;
+    margin-top: 4px;
+    margin-left: 2px;
+}
+
+.tags-box-display-flex-inner-item {
+    border: 1px solid;
+    width: 185px;
+    height: 140px;
+    margin-right: 5px;
+    margin-left: 2px;
+    overflow: auto;
+}
+
+.tags-box-display-flex-inner-item a {
+    color: hsl(206, 100%, 60%);
+    text-decoration: none;
+}
+
+.tags-box-display-flex-inner-item .text-stuff {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.tags-box-display-flex-inner-item a:hover {
+    filter: brightness(50%);
+    text-decoration: none;
+}
+.bottom-part-item.sidebar a {
+    color: hsl(206, 100%, 60%);
+    text-decoration: none;
+}
+
+.bottom-part-item.sidebar a:hover {
+    filter: brightness(50%);
+    text-decoration: none;
+}
+
+.answer-box-display-flex-item {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.ans-box-subdisplay-item.text-ans-by {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border: 1px solid;
+}
+
+.item-ans-box.actual-text {
+    width: 580px;
+    overflow-wrap: break-word;
+}
+
+.item-ans-box.actual-ansby {
+    width: 200px;
+    margin-left: 30px;
+    overflow: auto;
+}
+
+.ans-box-subdisplay-item.edit-delete-ans a {
+    color: hsl(206, 100%, 60%);
+}
+.ans-box-subdisplay-item.edit-delete-ans a:hover {
+    filter: brightness(50%);
+}

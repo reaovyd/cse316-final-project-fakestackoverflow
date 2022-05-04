@@ -55,8 +55,12 @@ api.post("/",  questionMiddleware.validBody, async (req, res, next) => {
     // actually this is optimal since we do it in O(Tags) and len(Tags) = O(users) usually 
     for(let name of newTags) {
         const newTag = new Tag({
-            name
+            name,
+            user
         })
+        const newTagUser = await User.findById(user._id)
+        newTagUser.tags = newTagUser.tags.concat(newTag)
+        await User.findByIdAndUpdate(user._id, newTagUser, {new: true}) 
         await newTag.save()
     }
     for(let name of req.body.tags) {

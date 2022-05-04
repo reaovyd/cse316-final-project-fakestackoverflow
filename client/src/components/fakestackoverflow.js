@@ -19,23 +19,6 @@ import SingleTagsPage from './singleTagPage';
 import CreateAnswerPage from './createAnswerPage';
 
 const FakeStackOverflow = () => {
-    //const navigate = useNavigate()
-    //const [allQuestions, setAllQuestions] = useState([])
-    //useEffect(() => {
-    //    // depending on if user has valid token
-    //    var token = window.localStorage.token 
-    //    var sessionGuestToken = window.sessionStorage.token
-    //    if (token === undefined && sessionGuestToken === undefined) {
-    //    } else {
-    //        loginCrud.verifyTokenExist(token).then(res => {
-    //        }).catch(err => {
-    //            loginCrud.verifyTokenExist(sessionGuestToken).then(res => {
-    //            }).catch((err) => {
-    //            })
-    //        })
-    //    }
-    //}, [])
-
     return (
         <div>
             <Routes>

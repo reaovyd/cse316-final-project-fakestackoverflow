@@ -85,6 +85,7 @@ const QCommentInput = ({set, text, placeholder, setErrors, qid, comments, setCom
                 const token = window.localStorage.getItem("token")
                 dbCrud.postQuestionComment(token, e.target.value, qid).then(res => {
                     var errorsDisplay = [<li key={1}className={"comment-success"}>{"Comment Posted Successfully!"}</li>]
+                    set('')
                     setComments(newCommentsCreator(comments, res.data, 3))
                     setErrors(<ul className="comment-unordered-list-success">{errorsDisplay}</ul>) 
                     setTimeout(() => {
@@ -302,6 +303,7 @@ const AnswerDisplayBox = ({singleAnswer}) => {
             setComments(newCommentsCreator(comments,res.data,3).filter(elem => elem.length !== 0))
 
             var errorsDisplay = [<li key={1}className={"comment-success"}>{"Comment Posted Successfully!"}</li>]
+                setInput('')
             setErrors(<ul className="comment-unordered-list-success">{errorsDisplay}</ul>) 
             setTimeout(() => {
                 setErrors(<></>)
