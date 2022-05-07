@@ -61,7 +61,7 @@ api.post("/login/:reg", userMiddleware.verifyEmail, userMiddleware.verifyPasswor
             id: user._id,
             registered: true
         }
-        const token = jwt.sign(userInfo, JWT_SECRET, {expiresIn: 60 * 60 * 24 * 60}) // token expires in 60 days screw you
+        const token = jwt.sign(userInfo, JWT_SECRET, {expiresIn: 60 * 60 * 24 * 60}) // token expires in 60 days
         res.status(201).json({
             message: "successfully logged in",
             token

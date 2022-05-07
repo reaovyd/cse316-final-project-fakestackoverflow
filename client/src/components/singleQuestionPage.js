@@ -432,13 +432,67 @@ const AnswersDisplayProxy = ({currentAnswers, qid}) => {
     }, [])
     const handleNextClick = () =>{
         if(page + 1 < currentAnswers.length) {
-            setPage(page + 1)
+            const token = window.localStorage.getItem("token")
+            dbCrud.fetchSingleQuestion(token, qid).then(res => {
+                const newAnswers = res.data.answers;
+                newAnswers.sort((a, b) => {
+                    return Date.parse(a.date) - Date.parse(b.date) > 0 ? -1 : 1
+                })
+
+                for(let ans of newAnswers) {
+                    ans.aComments.sort((a, b) => {
+                        return Date.parse(a.date) - Date.parse(b.date) > 0 ? -1 : 1
+                    })
+                }
+                setAnswers(divideAnArray(newAnswers, 5).map((elem, i) => {
+                    const elemArray = elem.map((val, j) => {
+                        return (<div key={j}>
+                                <AnswerDisplayBox singleAnswer={val}/>
+                            </div>)
+                    })
+                    return (
+                        <div key={i} className="answer-display-flex">
+                            {elemArray}
+                        </div>
+                    )
+                }))
+                setPage(page + 1)
+            }).catch(err => {
+                console.error(err)
+            })
         }
     }
 
     const handlePrevClick = () =>{
         if(page - 1 >= 0) {
-            setPage(page - 1)
+            const token = window.localStorage.getItem("token")
+            dbCrud.fetchSingleQuestion(token, qid).then(res => {
+                const newAnswers = res.data.answers;
+                newAnswers.sort((a, b) => {
+                    return Date.parse(a.date) - Date.parse(b.date) > 0 ? -1 : 1
+                })
+
+                for(let ans of newAnswers) {
+                    ans.aComments.sort((a, b) => {
+                        return Date.parse(a.date) - Date.parse(b.date) > 0 ? -1 : 1
+                    })
+                }
+                setAnswers(divideAnArray(newAnswers, 5).map((elem, i) => {
+                    const elemArray = elem.map((val, j) => {
+                        return (<div key={j}>
+                                <AnswerDisplayBox singleAnswer={val}/>
+                            </div>)
+                    })
+                    return (
+                        <div key={i} className="answer-display-flex">
+                            {elemArray}
+                        </div>
+                    )
+                }))
+                setPage(page - 1)
+            }).catch(err => {
+                console.error(err)
+            })
         }
     }
 

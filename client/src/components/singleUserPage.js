@@ -617,7 +617,6 @@ const SingleUserPageDisplay = ({userData, isTheUser}) => {
     }
     return (
         <div>
-        <NavigationBar />
             <div className="user-page-parts">
                 <div className={"user-page-parts-item top-part"}>
                     <div className="top-part-item top-username">
@@ -678,6 +677,7 @@ export default function SingleUserPage() {
     }, [])
     return (
         <div>
+            <NavigationBar />
             {display}
         </div>
     )
